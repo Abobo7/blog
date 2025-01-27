@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>1&period;GG&#x4fee;&#x6539;&#x5668;&#x5bfc;&#x51fa;so</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <hr>
+<p>title: il2cppdumper实战——XX方舟
+date: 2023/7/24</p>
+<hr>
+<hr>
+<p>虽然zygisk-il2cppdumper已经能基本满足需要，但动态dump出来的文件只能看个方法名，没有我们需要的dll、ida分析脚本等，所以还是需要使用il2cppdumper进行dump来获取。</p>
+<p>准备工作：GG修改器、粥的客户端、IDA（用来看偏移）、il2cppdumper</p>
+<h3 id="1gg修改器导出so">1.GG修改器导出so</h3>
+<p>因为粥的so做了加密，直接打开so并不能找到所需要的字符串，所以需要从内存中导出</p>
+<p><img src="https://s2.loli.net/2023/07/24/F9tahKklpw35GqA.png" alt="image-20230724111535500"></p>
+<p><img src="https://s2.loli.net/2023/07/24/rDGqRBT4eL9ivnp.png" alt="image-20230724111602691"></p>
+<h3 id="2ida分析导出的so">2.IDA分析导出的so</h3>
+<p>把导出的文件丢进ida，加载完按shift+f12转到字符串页面，搜索global_metatdata.dat</p>
+<p>按X查找引用，发现只有一个函数，直接跳转过去</p>
+<p><img src="https://s2.loli.net/2023/07/24/oISDlTbEWVux1zv.png" alt="image-20230724112113752"></p>
+<p>对比源码可知dword_937B00C即为s_GlobalMetadataHeader，具体可参考此帖</p>
+<p><a href="https://www.52pojie.cn/thread-1748681-1-1.html">https://www.52pojie.cn/thread-1748681-1-1.html</a></p>
+<p><img src="https://s2.loli.net/2023/07/24/zbmQWk5Zt49j8EM.png" alt="image-20230724112348639"></p>
+<h3 id="3gg修改器跳转">3.GG修改器跳转</h3>
+<p>使用偏移计算器，将libil2cpp.so的基址加上偏移找到s_GlobalMetadataHeader</p>
+<p><img src="https://s2.loli.net/2023/07/24/gJUclVuDEoB3rRK.png" alt="image-20230724112719660"></p>
+<p>长按进行指针跳转</p>
+<p><img src="https://s2.loli.net/2023/07/24/oGcEF1qCkSWQ6be.png" alt="image-20230724112751974"></p>
+<p>这些就是global-metadata.dat，把它dump出来，修改文件头为AF 1B B1 FA即可</p>
+<h3 id="4il2cppdumper进行dump">4.il2cppdumper进行dump</h3>
+<p>具体方法不再赘述，这里简单讲一下怎么找il2CppCodeRegistration和il2CppMetadataRegistration</p>
+<p>对比反汇编的源码和unity源码，可以找到它们所对应的值。在我的版本中，分别是dword_937AFFC</p>
+<p>和dword_937B000。具体请自行分析。</p>
+<p>找到这两个之后，在GG修改器用基址加上偏移定位到内存，再进行一次指针跳转即可得到</p>
+<p><img src="https://s2.loli.net/2023/07/24/VLwDz4ijx5QJOEg.png" alt="image-20230724113408191"></p>
+<p>在il2cppdumper的Auto模式失效的情况下手动输入即可</p>
+<p><img src="https://s2.loli.net/2023/07/24/l468yO13smEtrLG.png" alt="image"></p>
+
+            
+            
+        </body>
+        </html>

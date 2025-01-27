@@ -102,14 +102,11 @@ copyright_notice:
 comments:
   core:
     enable_at:
-    # - index
       - post
       - page
     template:
-      _shared: ""
-      index: ""
-      post: ""
-      page: ""
+      _shared: <div id="gitalk-container" class="kr-comments lazy-load" data-path="$PATH" data-path-hash="$PATH_HASH"></div>
+
   count:
     enable_at: []
     # - index
@@ -129,6 +126,10 @@ visit_count:
 
 ################## 额外的注入代码 ##################
 additional_injections:
-  head: "" # 搜索引擎验证，或是追加的样式表
-  footer: ""
-  after_footer: "" # 站点分析，或是追加的脚本
+  head: |
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <link rel="stylesheet" href="/comments/gitalk.css" />
+  after_footer: |
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="/comments/gitalk.js"></script>
+
